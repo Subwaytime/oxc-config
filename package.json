@@ -1,0 +1,20 @@
+{
+  "name": "@subwaytime/oxc-config",
+  "version": "0.0.1",
+  "module": "index.ts",
+  "type": "module",
+  "private": false,
+  "scripts": {
+    "lint": "bun --bun oxlint --type-aware",
+    "lint:fix": "bun --bun oxlint --type-aware --fix",
+    "get-rules": "bun ./gen.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@typescript/native-preview": "^7.0.0-dev.20260204.1",
+    "local-pkg": "^1.1.2",
+    "type-fest": "^5.4.3",
+    "oxlint": "^1.43.0",
+    "oxlint-tsgolint": "^0.11.4"
+  }
+}
