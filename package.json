@@ -10,11 +10,12 @@
     "get-rules": "bun ./gen.ts"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.8.0",
     "@types/bun": "latest",
     "@typescript/native-preview": "^7.0.0-dev.20260204.1",
     "local-pkg": "^1.1.2",
-    "type-fest": "^5.4.3",
     "oxlint": "^1.43.0",
-    "oxlint-tsgolint": "^0.11.4"
+    "oxlint-tsgolint": "^0.11.4",
+    "type-fest": "^5.4.3"
   }
 }
