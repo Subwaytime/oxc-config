@@ -2,20 +2,23 @@
   "name": "@subwaytime/oxc-config",
   "version": "0.0.1",
   "module": "index.ts",
-  "type": "module",
+  "devDependencies": {
+    "@clack/prompts": "^1.0.1",
+    "@stylistic/eslint-plugin": "^5.8.0",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "@types/bun": "1.3.9",
+    "@typescript/native-preview": "^7.0.0-dev.20260217.1",
+    "local-pkg": "^1.1.2",
+    "oxlint": "^1.48.0",
+    "oxlint-tsgolint": "^0.14.0",
+    "type-fest": "^5.4.4",
+    "yoctocolors": "^2.1.2"
+  },
   "private": false,
   "scripts": {
     "lint": "bun --bun oxlint --type-aware",
     "lint:fix": "bun --bun oxlint --type-aware --fix",
-    "get-rules": "bun ./gen.ts"
+    "cli": "bun ./cli.ts"
   },
-  "devDependencies": {
-    "@stylistic/eslint-plugin": "^5.8.0",
-    "@types/bun": "latest",
-    "@typescript/native-preview": "^7.0.0-dev.20260204.1",
-    "local-pkg": "^1.1.2",
-    "oxlint": "^1.43.0",
-    "oxlint-tsgolint": "^0.11.4",
-    "type-fest": "^5.4.3"
-  }
+  "type": "module"
 }
