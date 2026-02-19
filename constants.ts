@@ -2,7 +2,7 @@ import type { defineConfig } from 'oxlint';
 import type { Simplify } from 'type-fest';
 import { resolve } from 'path';
 
-type OxlintPlugins = NonNullable<Simplify<ReturnType<typeof defineConfig>['plugins']>>;
+export type OxlintPlugins = NonNullable<Simplify<ReturnType<typeof defineConfig>['plugins']>>;
 
 export const ACTIVE_PLUGINS: OxlintPlugins = [
     'eslint',
@@ -11,6 +11,6 @@ export const ACTIVE_PLUGINS: OxlintPlugins = [
     'vue'
 ] as const;
 
-export const PACKAGE = 'oxlint' as const;
+export const PACKAGE_NAME = 'oxlint' as const;
 
-export const FOLDER_GENERATED = resolve(__dirname, 'generated');
+export const SOURCE_FOLDER = resolve(__dirname, 'source');
