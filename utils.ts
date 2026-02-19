@@ -1,13 +1,5 @@
 import { spinner } from "@clack/prompts";
-import type { RuleSet, ValidScope } from "./types";
 import { green, red } from "yoctocolors";
-
-export function defineRules<const Scope extends ValidScope, const Rules extends RuleSet<Scope>>(
-    scope: Scope,
-    rules: Rules
-): Rules {
-    return rules;
-}
 
 export async function safeImport<T>(path: string): Promise<T> {
     return (await import(path) as unknown as T);

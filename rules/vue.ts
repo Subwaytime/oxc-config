@@ -1,4 +1,4 @@
-import { defineRules } from "../utils";
+import { defineRules } from "../types";
 
 export const VUE_RULES = defineRules("vue", {
     "vue/define-emits-declaration": ["error", "type-literal"],

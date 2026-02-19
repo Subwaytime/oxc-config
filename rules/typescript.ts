@@ -1,4 +1,4 @@
-import { defineRules } from "../utils";
+import { defineRules } from "../types";
 
 export const TYPESCRIPT_RULES = defineRules("typescript", {
     "typescript/adjacent-overload-signatures": "error",

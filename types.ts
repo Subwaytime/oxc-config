@@ -67,3 +67,10 @@ type RuleReturn = string | [string, ...unknown[]] | boolean | null
 export type RuleSet<Scope extends ValidScope> = {
     [K in RulesByScope[Scope]]?: RuleReturn;
 };
+
+export function defineRules<const Scope extends ValidScope, const Rules extends RuleSet<Scope>>(
+    scope: Scope,
+    rules: Rules
+): Rules {
+    return rules;
+}

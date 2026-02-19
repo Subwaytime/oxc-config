@@ -1,4 +1,4 @@
-import { defineRules } from "../utils";
+import { defineRules } from "../types";
 
 export const ESLINT_RULES = defineRules('eslint', {
     "eslint/accessor-pairs": ["error",
