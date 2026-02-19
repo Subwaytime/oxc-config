@@ -17,11 +17,11 @@ interface Action {
     start: string;
     fail: string;
     success: string;
-    fn: Function;
+    fn: () => Promise<boolean | undefined>;
     enabled?: boolean;
 }
 
-export async function action(data: Action) {
+export async function action(data: Action): Promise<boolean | undefined> {
     const s = spinner();
 
     s.start(data.start);
@@ -34,11 +34,11 @@ export async function action(data: Action) {
         }
         return result;
     } catch(error) {
-         s.error(error as string);; return;
+        s.error(error as string);
     }
 }
 
-export async function multiAction(actions: Action[]) {
+export async function multiAction(actions: Action[]): Promise<void> {
     for(const a of actions) {
         if(a.enabled === false) {
             continue;
