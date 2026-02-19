@@ -1,68 +1,49 @@
-import type { GENERATED_RULES } from "./generated/data";
-
-export interface FetchedPackageMeta {
-    name: string;
-    specifier: string;
-    version: string;
-    publishedAt: string;
-    lastSynced: number;
-}
-
-export interface OxlintRule {
-    scope: string;
-    value: string;
-    category: string;
-    type_aware: boolean;
-    fix: string;
-    default: boolean;
-    docs_url: string;
-}
-
-export interface DataSet {
-    name: string;
-    version: string;
-    created_at: string;
-    currentLoadedRules: number;
-    rules: string;
-}
-
-export interface Data extends Omit<DataSet, 'rules'> {
-    rules: OxlintRule[];
-}
-
-export type ScopedOxlintRuleName<OxlintRule extends { scope: string; value: string }> =
-    `${OxlintRule['scope']}/${OxlintRule['value']}`;
-
-export type AllScopedOxlintRules<OxlintRulesArray extends readonly { scope: string; value: string }[]> = {
-    [K in keyof OxlintRulesArray]: OxlintRulesArray[K] extends { scope: infer S; value: infer V }
-    ? S extends string
-    ? V extends string
-    ? `${S}/${V}`
-    : never
-    : never
-    : never;
-}[number];
-
-export type ScopedRules = AllScopedOxlintRules<typeof GENERATED_RULES>;
-export type ValidScope = ScopedRules extends `${infer S}/${string}` ? S : never;
-
-type RulesByScope = {
-    [S in ValidScope]: Extract<ScopedRules, `${S}/${string}`>;
-};
-
-export type StrictRuleSet<Scope extends ValidScope> =
-    & { [K in RulesByScope[Scope]]: [string, ...unknown[]] }
-    & Record<string, never>;
-
-type RuleReturn = string | [string, ...unknown[]] | boolean | null
-
-export type RuleSet<Scope extends ValidScope> = {
-    [K in RulesByScope[Scope]]?: RuleReturn;
-};
+import { spinner } from "@clack/prompts";
+import type { RuleSet, ValidScope } from "./types";
+import { green, red } from "yoctocolors";
 
 export function defineRules<const Scope extends ValidScope, const Rules extends RuleSet<Scope>>(
     scope: Scope,
     rules: Rules
 ): Rules {
     return rules;
+}
+
+export async function safeImport<T>(path: string): Promise<T> {
+    return (await import(path) as unknown as T);
+}
+
+interface Action {
+    start: string;
+    fail: string;
+    success: string;
+    fn: Function;
+    enabled?: boolean;
+}
+
+export async function action(data: Action) {
+    const s = spinner();
+
+    s.start(data.start);
+    try {
+        const result = await data.fn();
+        if(result) {
+            s.stop(green(data.success));
+        } else {
+            s.error(red(data.fail));
+        }
+        return result;
+    } catch(error) {
+         s.error(error as string);; return;
+    }
+}
+
+export async function multiAction(actions: Action[]) {
+    for(const a of actions) {
+        if(a.enabled === false) {
+            continue;
+        }
+
+        await action(a);
+    }
 }
