@@ -27,7 +27,7 @@ export async function action(data: Action): Promise<boolean | undefined> {
     s.start(data.start);
     try {
         const result = await data.fn();
-        if(result) {
+        if(result !== undefined && result) {
             s.stop(green(data.success));
         } else {
             s.error(red(data.fail));
